@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3749751331644660557}
   - component: {fileID: 3749751331644660556}
   - component: {fileID: 3749751331644660555}
-  - component: {fileID: 3749751331644660554}
   - component: {fileID: -8609666415160532552}
   - component: {fileID: -6500022877532116118}
   - component: {fileID: 994769752858018350}
@@ -31,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3749751331644660553}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.72, y: -1.09, z: 0}
+  m_LocalPosition: {x: -4.72, y: -5, z: 0}
   m_LocalScale: {x: 25, y: 25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,9 +99,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.016175259, y: -0.0064701717}
+  m_Offset: {x: 0.010504532, y: -0.00042415617}
   serializedVersion: 2
-  m_Radius: 0.057354566
+  m_Radius: 0.046388417
 --- !u!61 &3749751331644660555
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -129,27 +128,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.098533876, y: 0.043537885}
   m_EdgeRadius: 0
---- !u!50 &3749751331644660554
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3749751331644660553}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &-8609666415160532552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8d6539c8cbd5642bcf38f0b7159dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 11
+  speed: 10
 --- !u!114 &-6500022877532116118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +164,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c9c2c7958a63d7744b0fbbc37e62048c, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

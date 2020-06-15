@@ -5,15 +5,21 @@ using UnityEngine;
 public class objectMover : MonoBehaviour
 {
     public float speed;
-    private Rigidbody2D _rigidbody;
+
+    private Transform _transform;
+
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
+        _transform = GetComponent<Transform>();
+    }
+
+    private void Update()
+    {
+        _transform.position += Vector3.left * speed * Time.deltaTime;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        _rigidbody.velocity = new Vector2(-speed, _rigidbody.velocity.y);
     }
 }

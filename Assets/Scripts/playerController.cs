@@ -11,6 +11,7 @@ public class playerController : MonoBehaviour
     public float incY;
     public float maxHeigth;
     public float minHeigth;
+    public float speedInc;
 
     public GameObject deathMenu;
     [Header("Swipes")]
@@ -22,22 +23,9 @@ public class playerController : MonoBehaviour
     private Animator _animator;
     private Transform _transform;
 
-    private float swipeStartTime;
-    private float swipeEndTime;
-    private float swipeTime;
+    private bool alive;
+    private Coroutine currCoroutine = null;
 
-    private Vector2 startSwipePosition;
-    private Vector2 endSwipePosition;
-    private float swipeLength;
-
-
-    enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
 
     private void Awake()
     {
@@ -45,7 +33,11 @@ public class playerController : MonoBehaviour
         {
             Advertisement.Initialize("3647585");
         }
+        alive = true;
+        Controls.maxSwapTime = maxSwapTime;
+        Controls.minSwipeDistance = minSwipeDistance;
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,43 +49,65 @@ public class playerController : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log("Update: " + Time.deltaTime);
+        if (alive)
+        {
+            TryControl();
+            GameManager.distance++;
+           // Debug.Log(GameManager.distance);
+        }
         Animate();
     }
 
     void FixedUpdate()
     {
-        Controls();
+        //Debug.Log(currCoroutine);
+        if (alive)
+        {
+            GameManager.distance += 1;
+            if (GameManager.distance % 100 == 0) GameManager.timeSpeed += speedInc;
+            Time.timeScale = GameManager.timeSpeed;
+        }
     }
 
-    private void Controls()
+    private void TryControl()
     {
-        if(GetInput(Direction.Up))
+        if(Controls.GetInput(Controls.Direction.Up))
         {
-            Move(Direction.Up);
+            Move(Controls.Direction.Up);
         }
-        if(GetInput(Direction.Down))
+        if(Controls.GetInput(Controls.Direction.Down))
         {
-            Move(Direction.Down);
+            Move(Controls.Direction.Down);
         }
     }
 
     private void Animate()
     {
-        _animator.SetFloat("velocity",_rigidbody.velocity.y);
     }
 
-
-    private void Move(Direction dir)
+    private void Move(Controls.Direction dir)
     {
-        switch(dir)
+        //Debug.Log(dir);
+
+        if (currCoroutine != null) return;
+
+        switch (dir)
         {
-            case Direction.Up:
-                if(_transform.position.y<maxHeigth)
-                    _transform.position += Vector3.up * incY;
+
+            case Controls.Direction.Up:
+                if (_transform.position.y < maxHeigth)
+                {   
+                    currCoroutine = StartCoroutine(Moving(_transform.position + Vector3.up*incY));
+                   //  _transform.position += Vector3.up * incY;
+                }
                 break;
-            case Direction.Down:
+            case Controls.Direction.Down:
                 if (_transform.position.y > minHeigth)
-                    _transform.position += Vector3.down * incY;
+                {
+                    currCoroutine = StartCoroutine(Moving(_transform.position + Vector3.down * incY));
+                    //_transform.position += Vector3.down * incY;
+                }
                 break;
         }
     }
@@ -108,85 +122,30 @@ public class playerController : MonoBehaviour
 
     private void Lose()
     {
-        deathMenu.SetActive(true);
+        alive = false;
         Time.timeScale = 0;
+        if (GameManager.distance/10 > PlayerPrefs.GetInt("maxDistance"))
+        {
+            PlayerPrefs.SetInt("maxDistance", (int)GameManager.distance / 10);
+        }
+        deathMenu.SetActive(true);
     }
 
-    private bool GetInput(Direction dir)
+    private IEnumerator Moving(Vector3 endPos)
     {
-        if(PCControls(dir)) return true;
-        if (AndroidControls(dir)) return true;
-        return false;
+
+        Vector3 dirVec = Vector3.Normalize(endPos - _transform.position);
         
-    }
 
-    private bool PCControls(Direction dir)
-    {
-        switch (dir)
+        while(Vector2.Distance(_transform.position,endPos)> 0.01)
         {
-            case Direction.Up:
-                return (Input.GetKeyDown(KeyCode.UpArrow));// || Input.GetTouch(0).phase == TouchPhase.Moved);
-            case Direction.Down:
-                return (Input.GetKeyDown(KeyCode.DownArrow));// || Input.GetTouch(0).phase == TouchPhase.Moved);
-            case Direction.Left:
-                return (Input.GetKey(KeyCode.LeftArrow));// || Input.GetTouch(0).phase == TouchPhase.Moved);
-            case Direction.Right:
-                return (Input.GetKey(KeyCode.RightArrow));// || Input.GetTouch(0).phase == TouchPhase.Moved);
-            default: return false;
-        }
-    }
-
-    private bool AndroidControls(Direction dir)
-    {
-        if (!SwipeTest()) return false;
-
-        Direction realDir;
-
-        Vector2 Distance = endSwipePosition - startSwipePosition;
-
-        float DistanceX = Mathf.Abs(Distance.x);
-        float DistanceY = Mathf.Abs(Distance.y);
-
-        if(DistanceX < DistanceY)
-        {
-            if (Distance.y < 0)
-                realDir = Direction.Down;
-            else               
-                realDir = Direction.Up;
-        }
-        else
-        {
-            if (Distance.x < 0)
-                realDir = Direction.Left;
-            else              
-                realDir = Direction.Right;
+            _transform.position += dirVec * speed;
+            yield return new WaitForEndOfFrame();
         }
 
-        return (dir == realDir);
-    }
 
-    private bool SwipeTest()
-    {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                swipeStartTime = Time.time;
-                startSwipePosition = touch.position;
-            }
-            else
-            if (touch.phase == TouchPhase.Ended)
-            {
-                swipeEndTime = Time.time;
-                endSwipePosition = touch.position;
-                swipeTime = swipeEndTime - swipeStartTime;
-                swipeLength = (endSwipePosition - startSwipePosition).magnitude;
-                return (swipeTime < maxSwapTime && swipeLength > minSwipeDistance);
-            }
-        }
-        return false;
+        currCoroutine = null;
+        yield return null;
     }
-
 
 }

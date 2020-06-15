@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6076302318216172630}
   - component: {fileID: 6076302318216172617}
   - component: {fileID: 6076302318216172616}
-  - component: {fileID: 6076302318216172619}
   - component: {fileID: 5739941455878523140}
   - component: {fileID: 8689893691903236976}
   - component: {fileID: 9167601579357810999}
@@ -99,30 +98,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.0050939247}
+  m_Offset: {x: -0.020344533, y: 0.0050939224}
   serializedVersion: 2
-  m_Radius: 0.0596244
---- !u!50 &6076302318216172619
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6076302318216172618}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Radius: 0.03927987
 --- !u!114 &5739941455878523140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8d6539c8cbd5642bcf38f0b7159dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 14
+  speed: 10
 --- !u!114 &8689893691903236976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +137,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7987ada926f8a5649aeaadbb29240f67, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

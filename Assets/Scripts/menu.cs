@@ -9,17 +9,19 @@ public class menu : MonoBehaviour
     // Start is called before the first frame update
    public void Pause()
     {
-        Time.timeScale = 0;
+        Time.timeScale  = 0;
     }
     public void Resume()
     {
-        Time.timeScale = 1;
+        Time.timeScale =  GameManager.timeSpeed;
     }
 
     public void Replay()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        GameManager.timeSpeed = 1;
+        Time.timeScale = GameManager.timeSpeed;
+        GameManager.distance = 0;
+        SceneManager.LoadScene(1);
     }
 
     public void Rise()
@@ -30,4 +32,10 @@ public class menu : MonoBehaviour
         }
     }
 
+
+    public void ToMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
 }
