@@ -10,13 +10,27 @@ public class GameManager : ScriptableObject
 
     static public float distance = 0;
 
+
     private void Awake()
-    { 
+    {
 
         if(!PlayerPrefs.HasKey("maxDistance"))
         {
             PlayerPrefs.SetInt("maxDistance",0);
         }
+    }
+
+    static public void SaveBestDist()
+    {
+        if (distance / 10 > PlayerPrefs.GetInt("maxDistance"))
+        {
+            PlayerPrefs.SetInt("maxDistance", (int)distance / 10);
+        }
+    }
+
+    static public void TurnMusic()
+    {
+        AudioListener.volume = 1 - AudioListener.volume;
     }
 
 }

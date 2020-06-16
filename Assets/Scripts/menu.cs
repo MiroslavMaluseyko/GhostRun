@@ -6,10 +6,21 @@ using UnityEngine.Advertisements;
 
 public class menu : MonoBehaviour
 {
-    // Start is called before the first frame update
-   public void Pause()
+
+    public GameObject player;
+    public GameObject pauseMenu;
+
+    private playerController pc;
+
+    private void Start()
+    {
+        pc = player.GetComponent<playerController>();
+    }
+
+    public void Pause()
     {
         Time.timeScale  = 0;
+        pauseMenu.SetActive(true);
     }
     public void Resume()
     {
@@ -29,6 +40,10 @@ public class menu : MonoBehaviour
         if(Advertisement.IsReady())
         {
             Advertisement.Show("rewardedVideo");
+            playerController.alive = true;
+            pc.deathMenu.SetActive(false);
+            Resume();
+            Pause();
         }
     }
 
@@ -36,6 +51,9 @@ public class menu : MonoBehaviour
     public void ToMainMenu()
     {
         Time.timeScale = 1;
+        GameManager.timeSpeed = 1;
+        GameManager.distance = 0;
         SceneManager.LoadScene(0);
+        //SceneManager.UnloadSceneAsync(1);
     }
 }

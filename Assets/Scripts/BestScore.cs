@@ -12,12 +12,12 @@ public class BestScore : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
-        text.text = "Yours: " + (int)GameManager.distance/10 + "\nBest: " + PlayerPrefs.GetInt("maxDistance");
-
+        text.text = "Yours: " + (int)GameManager.distance / 10 + "\nBest: " + PlayerPrefs.GetInt("maxDistance");
     }
 
     // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
+       text.text = "Yours: " + (int)GameManager.distance / 10 + "\nBest: " + PlayerPrefs.GetInt("maxDistance");
     }
 }

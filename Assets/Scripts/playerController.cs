@@ -23,7 +23,7 @@ public class playerController : MonoBehaviour
     private Animator _animator;
     private Transform _transform;
 
-    private bool alive;
+    static public bool alive;
     private Coroutine currCoroutine = null;
 
 
@@ -72,6 +72,7 @@ public class playerController : MonoBehaviour
 
     private void TryControl()
     {
+        if (Time.timeScale == 0) return;
         if(Controls.GetInput(Controls.Direction.Up))
         {
             Move(Controls.Direction.Up);
@@ -117,6 +118,7 @@ public class playerController : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             Lose();
+            Destroy(collision.gameObject);
         }
     }
 
@@ -124,12 +126,10 @@ public class playerController : MonoBehaviour
     {
         alive = false;
         Time.timeScale = 0;
-        if (GameManager.distance/10 > PlayerPrefs.GetInt("maxDistance"))
-        {
-            PlayerPrefs.SetInt("maxDistance", (int)GameManager.distance / 10);
-        }
+        GameManager.SaveBestDist();
         deathMenu.SetActive(true);
     }
+
 
     private IEnumerator Moving(Vector3 endPos)
     {

@@ -5,7 +5,9 @@ using UnityEngine;
 public class spanwer : MonoBehaviour
 {
     public float interval;
-    public GameObject[] objects;
+    public int rowCount;
+    public GameObject[] airObjects;
+    public GameObject[] groundObjects;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,18 @@ public class spanwer : MonoBehaviour
         for (;;)
         {
             yield return new WaitForSeconds(interval);
-            Instantiate(objects[Random.Range(0,objects.Length)]);
+            int spaceIndex = Random.Range(0, rowCount);
+            float yCoord = -5;
+            if (spaceIndex != 0)
+            {
+                Instantiate(groundObjects[Random.Range(0, groundObjects.Length)]);
+            }
+            for (int i = 1;i<rowCount;i++)
+            {
+                yCoord += 5;
+                if (spaceIndex == i) continue;
+                Instantiate(airObjects[Random.Range(0, airObjects.Length)], new Vector2(-5,yCoord), new Quaternion());
+            }
         }
     }
 }

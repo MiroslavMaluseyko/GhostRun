@@ -53,7 +53,7 @@ public class Controls : ScriptableObject
     {
         if (!SwipeTest()) return false;
 
-        Direction realDir = Direction.Right;
+        Direction realDir;
 
         Vector2 Distance = endSwipePosition - startSwipePosition;
 
