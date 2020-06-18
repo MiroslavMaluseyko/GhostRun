@@ -8,6 +8,8 @@ public class spanwer : MonoBehaviour
     public int rowCount;
     public GameObject[] airObjects;
     public GameObject[] groundObjects;
+
+    static public List<GameObject> objects;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,7 @@ public class spanwer : MonoBehaviour
             {
                 yCoord += 5;
                 if (spaceIndex == i) continue;
-                Instantiate(airObjects[Random.Range(0, airObjects.Length)], new Vector2(-5,yCoord), new Quaternion());
+                Instantiate(airObjects[Random.Range(0, airObjects.Length)], new Vector2(-5, yCoord), new Quaternion());
             }
         }
     }

@@ -16,6 +16,6 @@ public class Distance : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        text.text = "Distance: " + (int)GameManager.distance/10;
+        text.text = (int)GameManager.distance/10 + "m";
     }
 }

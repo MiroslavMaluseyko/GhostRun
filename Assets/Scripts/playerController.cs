@@ -53,7 +53,6 @@ public class playerController : MonoBehaviour
         if (alive)
         {
             TryControl();
-            GameManager.distance++;
            // Debug.Log(GameManager.distance);
         }
         Animate();
@@ -64,7 +63,7 @@ public class playerController : MonoBehaviour
         //Debug.Log(currCoroutine);
         if (alive)
         {
-            GameManager.distance += 1;
+            if(Time.timeScale != 0)GameManager.distance += 1;
             if (GameManager.distance % 100 == 0) GameManager.timeSpeed += speedInc;
             Time.timeScale = GameManager.timeSpeed;
         }
@@ -118,7 +117,6 @@ public class playerController : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             Lose();
-            Destroy(collision.gameObject);
         }
     }
 

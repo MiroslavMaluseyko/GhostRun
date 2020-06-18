@@ -42,6 +42,14 @@ public class menu : MonoBehaviour
             Advertisement.Show("rewardedVideo");
             playerController.alive = true;
             pc.deathMenu.SetActive(false);
+
+            GameObject [] objects = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach(GameObject obj in objects)
+            {
+                Destroy(obj);
+            }
+
             Resume();
             Pause();
         }
