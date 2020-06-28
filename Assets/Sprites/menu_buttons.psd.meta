@@ -26,6 +26,9 @@ TextureImporter:
   - first:
       213: -8180067465364294177
     second: menu_buttons_7
+  - first:
+      213: 2470984068398848082
+    second: menu_buttons_8
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -148,7 +151,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c2dd82f7bf7ee4419be5dffe57cf1aa
+      spriteID: 02600e4194f9f0940aefc60903d3d7ed
       internalID: -9016607483983178484
       vertices: []
       indices: 
@@ -169,7 +172,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4fe609a4f0da7db41af389f37fc6e015
+      spriteID: e4ad9f469255ca741beb4aea8dfa375b
       internalID: -7421592913449672578
       vertices: []
       indices: 
@@ -190,7 +193,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b02b5000ceab7e47b59d09e35bc1cde
+      spriteID: 5cddb959a57c0e24c8098f58769fed2e
       internalID: -8519022737440003418
       vertices: []
       indices: 
@@ -211,7 +214,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58d79adb5e320ef40b3cafa8132e3ac2
+      spriteID: c7dd0cfae7405c340a52b6ecb9760014
       internalID: 4196839423909144710
       vertices: []
       indices: 
@@ -232,7 +235,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca84dbe21a5a5c6419e669a67dea63fe
+      spriteID: e330cf0af705c5246b5dcfc2f5347ed7
       internalID: -3017887439063203640
       vertices: []
       indices: 
@@ -253,7 +256,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66eda53026f5afc46955efb6e8b49ccf
+      spriteID: 8f90615b99965bb4ba04ab344e7e88b5
       internalID: 5681577502782440470
       vertices: []
       indices: 
@@ -274,7 +277,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2fc34bd6a01b66b4f8bd408958010988
+      spriteID: 6a951c562e0de264a82b1563677c0794
       internalID: -4722469139264870737
       vertices: []
       indices: 
@@ -295,8 +298,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2dde9bfc2d1771f4ea78cce72da213ab
+      spriteID: 2d7944dd8cd68a9459d4b5682de4b795
       internalID: -8180067465364294177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: menu_buttons_8
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 62
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 456654338c2548e4fae41748fc7cd42c
+      internalID: 2470984068398848082
       vertices: []
       indices: 
       edges: []

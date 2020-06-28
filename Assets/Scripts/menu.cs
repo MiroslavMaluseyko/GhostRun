@@ -32,6 +32,7 @@ public class menu : MonoBehaviour
         GameManager.timeSpeed = 1;
         Time.timeScale = GameManager.timeSpeed;
         GameManager.distance = 0;
+        GameManager.lifeCount = 3;
         SceneManager.LoadScene(1);
     }
 
@@ -42,13 +43,7 @@ public class menu : MonoBehaviour
             Advertisement.Show("rewardedVideo");
             playerController.alive = true;
             pc.deathMenu.SetActive(false);
-
-            GameObject [] objects = GameObject.FindGameObjectsWithTag("Enemy");
-
-            foreach(GameObject obj in objects)
-            {
-                Destroy(obj);
-            }
+            GameManager.lifeCount = 3;
 
             Resume();
             Pause();

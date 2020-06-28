@@ -10,6 +10,8 @@ public class GameManager : ScriptableObject
 
     static public float distance = 0;
 
+    static public int lifeCount = 3;
+
 
     private void Awake()
     {
@@ -33,4 +35,15 @@ public class GameManager : ScriptableObject
         AudioListener.volume = 1 - AudioListener.volume;
     }
 
+    static public bool LifesOver()
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject obj in objects)
+        {
+            Destroy(obj);
+        }
+        lifeCount--;
+        return 0 == lifeCount;
+    }
 }

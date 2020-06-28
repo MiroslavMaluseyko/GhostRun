@@ -122,10 +122,13 @@ public class playerController : MonoBehaviour
 
     private void Lose()
     {
-        alive = false;
-        Time.timeScale = 0;
-        GameManager.SaveBestDist();
-        deathMenu.SetActive(true);
+        if(GameManager.LifesOver())
+        {
+            alive = false;
+            Time.timeScale = 0;
+            GameManager.SaveBestDist();
+            deathMenu.SetActive(true);
+        }
     }
 
 
