@@ -1,115 +1,83 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Controls : ScriptableObject
+class Controls
 {
-    // Start is called before the first frame update
-    //[Header("Swipes")]
-    static public float maxSwapTime;
-    static public float minSwipeDistance;
+	public const float MAX_SWIPE_TIME = 0.5f;
 
-    static private float swipeStartTime;
-    static  float swipeEndTime;
-    static private float swipeTime;
+	public const float MIN_SWIPE_DISTANCE = 0.05f;
 
-    static private Vector2 startSwipePosition;
-    static private Vector2 endSwipePosition;
-    static private float swipeLength;
+	static bool swipedUp;
+	static bool swipedDown;
 
 
-    public enum Direction
+	static private Vector2 startPos;
+	static private float startTime;
+
+	static public Direction GetControls()
     {
-        Up,
-        Down,
-        Left,
-        Right
-    }
-    static public bool GetInput(Direction dir)
-    {
-        if(PCControls(dir)) return true;
-        if (AndroidControls(dir)) return true;
-        return false;
-
-    }
-
-    static private  bool PCControls(Direction dir)
-    {
-        switch (dir)
+		Swipe();
+        if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || swipedUp)
         {
-            case Direction.Up:
-                return (Input.GetKeyDown(KeyCode.UpArrow));
-            case Direction.Down:
-                return (Input.GetKeyDown(KeyCode.DownArrow));
-            case Direction.Left:
-                return (Input.GetKey(KeyCode.LeftArrow));
-            case Direction.Right:
-                return (Input.GetKey(KeyCode.RightArrow));
-            default: return false;
+            return Direction.Up;
         }
+        if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || swipedDown)
+        {
+            return Direction.Down;
+        }
+        return Direction.None;
     }
 
-    static private bool AndroidControls(Direction dir)
+    static private void Swipe()
     {
-        if (!SwipeTest()) return false;
+		swipedUp = false;
+		swipedDown = false;
 
-        Direction realDir;
 
-        Vector2 Distance = endSwipePosition - startSwipePosition;
+		if (Input.touchCount > 0)
+		{
+			Touch t = Input.GetTouch(0);
+			if (t.phase == TouchPhase.Began)
+			{
+				startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+				startTime = Time.time;
+			}
+			if (t.phase == TouchPhase.Ended)
+			{
+				if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
+					return;
 
-        float DistanceX = Mathf.Abs(Distance.x);
-        float DistanceY = Mathf.Abs(Distance.y);
+				Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
 
-        if (DistanceX < DistanceY)
-        {
-            if (Distance.y < 0)
-                realDir = Direction.Down;
-            else
-                realDir = Direction.Up;
-        }
-        else
-        {
-            if (Distance.x < 0)
-                realDir = Direction.Left;
-            else
-                realDir = Direction.Right;
-        }
-        //Debug.Log(realDir);
-        return (dir == realDir);
-    }
+				Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
 
-     static private bool SwipeTest()
-    {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    swipeStartTime = Time.time;
-                    startSwipePosition = touch.position;
-                    // Debug.Log("Start");
-                    break;
+				if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
+					return;
 
-               /* case TouchPhase.Moved:
-                    //  Debug.Log("Moving");
-                    break;*/
-                case TouchPhase.Moved:
+				if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+				{ // Horizontal swipe
+					if (swipe.x > 0)
+					{
+						//swipedRight = true;
+					}
+					else
+					{
+						//swipedLeft = true;
+					}
+				}
+				else
+				{ // Vertical swipe
+					if (swipe.y > 0)
+					{
+						swipedUp = true;
+					}
+					else
+					{
+						swipedDown = true;
+					}
+				}
+			}
+		}
 
-                    swipeEndTime = Time.time;
-                    endSwipePosition = touch.position;
-                    swipeTime = swipeEndTime - swipeStartTime;
-                    swipeLength = (endSwipePosition - startSwipePosition).magnitude;
-
-                    //Debug.Log(swipeTime + "    " + swipeLength + "    ");
-                    //Debug.Log("End");
-
-                    return (swipeTime < maxSwapTime && swipeLength > minSwipeDistance);
-                    break;
-
-            }
-        }
-        return false;
-    }
-
+	}
 }

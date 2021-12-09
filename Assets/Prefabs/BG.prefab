@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1944954543568935285}
   - component: {fileID: 1944954543568935284}
   - component: {fileID: 1944954543568935287}
-  - component: {fileID: 1944954543568935288}
+  - component: {fileID: 1832209021558779994}
   m_Layer: 0
   m_Name: BackGround
   m_TagString: Untagged
@@ -127,7 +127,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: -1
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1944954543568935288
+--- !u!114 &1832209021558779994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,10 +136,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1944954543568935286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd2df24f00ec84743903d17476a09b96, type: 3}
+  m_Script: {fileID: 11500000, guid: 96345c0ab85bb1342b1e4b9088f38272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speedX: 0
+  speedY: 0
 --- !u!1 &1944954543588556408
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +153,7 @@ GameObject:
   - component: {fileID: 1944954543588556412}
   - component: {fileID: 1944954543588556415}
   - component: {fileID: 1944954543588556414}
-  - component: {fileID: 1944954543588556354}
+  - component: {fileID: 1547580384744408436}
   m_Layer: 0
   m_Name: BackGroundTop
   m_TagString: Untagged
@@ -234,7 +235,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: -1
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1944954543588556354
+--- !u!114 &1547580384744408436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -243,10 +244,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1944954543588556408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd2df24f00ec84743903d17476a09b96, type: 3}
+  m_Script: {fileID: 11500000, guid: 96345c0ab85bb1342b1e4b9088f38272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.25
+  speedX: 0
+  speedY: 0
 --- !u!1 &1944954543929022047
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +261,7 @@ GameObject:
   - component: {fileID: 1944954543929020835}
   - component: {fileID: 1944954543929020834}
   - component: {fileID: 1944954543929022045}
-  - component: {fileID: 1944954543929020833}
+  - component: {fileID: 2067354252353292078}
   m_Layer: 0
   m_Name: BackGroundMid
   m_TagString: Untagged
@@ -341,7 +343,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: -1
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1944954543929020833
+--- !u!114 &2067354252353292078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,7 +352,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1944954543929022047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd2df24f00ec84743903d17476a09b96, type: 3}
+  m_Script: {fileID: 11500000, guid: 96345c0ab85bb1342b1e4b9088f38272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.15
+  speedX: 0
+  speedY: 0

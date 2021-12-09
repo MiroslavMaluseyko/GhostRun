@@ -2,61 +2,145 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
-public class menu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
+    public GameObject pauseMenuUI;
+    public GameObject gameplayMenuUI;
+    public GameObject deathMenuUI;
+    public GameObject riseMenuUI;
+    public GameObject mainUI;
 
-    public GameObject player;
-    public GameObject pauseMenu;
-
-    private playerController pc;
+    [Header("Manager")]
+    public GameManager gameManager;
+    [Header("Texts")]
+    public Text bestScore;
+    private Coroutine waiting;
 
     private void Start()
     {
-        pc = player.GetComponent<playerController>();
+        GameValues.GameStarted = false;
+    }
+
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(GameValues.GamePaused)
+            {
+                Resume();
+            }else
+            {
+                Pause();
+            }
+        }
+    }
+    public void Play()
+    {
+        GameValues.ToDefault();
+        gameplayMenuUI.SetActive(true);
+        mainUI.SetActive(false);
+        deathMenuUI.SetActive(false);
+        riseMenuUI.SetActive(false);
+        pauseMenuUI.SetActive(false);
+
+    }
+
+    public void Resume()
+    {
+        gameplayMenuUI.SetActive(true);
+        pauseMenuUI.SetActive(false);
+        mainUI.SetActive(false);
+        deathMenuUI.SetActive(false);
+        riseMenuUI.SetActive(false);
+        GameValues.GamePaused = false;
     }
 
     public void Pause()
     {
-        Time.timeScale  = 0;
-        pauseMenu.SetActive(true);
-    }
-    public void Resume()
-    {
-        Time.timeScale =  GameManager.timeSpeed;
+        pauseMenuUI.SetActive(true);
+        gameplayMenuUI.SetActive(false);
+        mainUI.SetActive(false);
+        deathMenuUI.SetActive(false);
+        riseMenuUI.SetActive(false);
+        GameValues.GamePaused = true;
     }
 
-    public void Replay()
+    public void Quit()
     {
-        GameManager.timeSpeed = 1;
-        Time.timeScale = GameManager.timeSpeed;
-        GameManager.distance = 0;
-        GameManager.lifeCount = 3;
-        SceneManager.LoadScene(1);
+        Application.Quit();
+    }
+
+    public void MainMenu()
+    {
+        GameValues.ToDefault();
+        SceneManager.LoadScene(0);
+    }
+
+    public void Death()
+    {
+        GameValues.GamePaused = true;
+        riseMenuUI.SetActive(true);
+        pauseMenuUI.SetActive(false);
+        gameplayMenuUI.SetActive(false);
+        mainUI.SetActive(false);
+        deathMenuUI.SetActive(false);
+        waiting = StartCoroutine(RiseWaiting());
     }
 
     public void Rise()
     {
-        if(Advertisement.IsReady())
-        {
-            Advertisement.Show("rewardedVideo");
-            playerController.alive = true;
-            pc.deathMenu.SetActive(false);
-            GameManager.lifeCount = 3;
-
-            Resume();
-            Pause();
-        }
+        StopCoroutine(waiting);
+        gameManager.Rise(1);
+        AdsManager.ShowRewarded();
+        Resume();
     }
 
-
-    public void ToMainMenu()
+    public void Retry()
     {
-        Time.timeScale = 1;
-        GameManager.timeSpeed = 1;
-        GameManager.distance = 0;
-        SceneManager.LoadScene(0);
-        //SceneManager.UnloadSceneAsync(1);
+        gameManager.Rise(3);
+        Play();
     }
+
+    public void End()
+    {
+        float best = PlayerPrefs.GetInt("BestScore",0);
+        if (GameValues.Score > best)
+        {
+            PlayerPrefs.SetInt("BestScore", GameValues.Score);
+        }
+        best = PlayerPrefs.GetInt("BestScore", 0);
+        int your = GameValues.Score;
+        bestScore.text = $"Best score: {best.ToString()} \nYour score: {your.ToString()}";
+        StopCoroutine(waiting);
+        GameValues.GamePaused = true;
+        deathMenuUI.SetActive(true);
+        riseMenuUI.SetActive(false);
+        pauseMenuUI.SetActive(false);
+        gameplayMenuUI.SetActive(false);
+        mainUI.SetActive(false);
+    }
+
+    private IEnumerator RiseWaiting()
+    {
+        yield return new WaitForSecondsRealtime(4);
+        End();
+        yield return null;
+    }
+
+    public void Sound()
+    {
+        if (AudioListener.volume == 1)
+        {
+            AudioListener.volume = 0;
+        }
+        else
+        {
+            AudioListener.volume = 1;
+        }
+        PlayerPrefs.SetInt("Volume",(int)AudioListener.volume);
+    }
+
 }

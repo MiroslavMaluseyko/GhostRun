@@ -1,49 +1,88 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Advertisements;
 
-
-public class GameManager : ScriptableObject
+public class GameManager : MonoBehaviour
 {
-    static public float timeSpeed = 1;
+    public PlayerBox player;
+    public Menu UI;
+    public Spawner spawner;
+    private Coroutine scoreCounter;
 
-    static public float distance = 0;
 
-    static public int lifeCount = 3;
-
-
-    private void Awake()
+    void Start()
     {
+        AudioListener.volume = PlayerPrefs.GetInt("Volume",1);
 
-        if(!PlayerPrefs.HasKey("maxDistance"))
-        {
-            PlayerPrefs.SetInt("maxDistance",0);
-        }
     }
 
-    static public void SaveBestDist()
+    // Update is called once per frame
+    void Update()
     {
-        if (distance / 10 > PlayerPrefs.GetInt("maxDistance"))
+        if (GameValues.GameStarted)
         {
-            PlayerPrefs.SetInt("maxDistance", (int)distance / 10);
+            if (scoreCounter == null) scoreCounter = StartCoroutine(ScoreAdding());
+            Time.timeScale = GameValues.TimeScale;
+
+            
+            if (!spawner.isActiveAndEnabled)
+            {
+                spawner.gameObject.SetActive(true);
+            }
+            if (GameValues.GamePaused && Time.timeScale > 0)
+            {
+                Time.timeScale = 0;
+
+            }
+            else
+            if (!GameValues.GamePaused && Time.timeScale == 0)
+            {
+                Time.timeScale = GameValues.TimeScale;
+            }
+            if (!player.Alive && !GameValues.GamePaused)
+            {
+                if (!GameValues.Rised)
+                {
+                    GameValues.Rised = true;
+                    UI.Death();
+                }
+                else
+                {
+                    UI.End();
+                }
+            }
+        }else
+        {
+            if(scoreCounter != null)StopCoroutine(scoreCounter);
         }
+
     }
 
-    static public void TurnMusic()
+    public void Rise(int x)
     {
-        AudioListener.volume = 1 - AudioListener.volume;
+        player.Alive = true;
+        player.lifes = x;
+        foreach (EnemyMover enemy in Spawner.enemyPool)
+        {
+            Destroy(enemy.gameObject);
+        }
+        Spawner.enemyPool.Clear();
     }
 
-    static public bool LifesOver()
+    private IEnumerator ScoreAdding()
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (GameObject obj in objects)
+        while (true)
         {
-            Destroy(obj);
+            yield return new WaitForSeconds(1);
+            GameValues.Score++;
+            if (GameValues.Score <= 100)
+            {
+                if (GameValues.Score % 10 == 0) GameValues.TimeScale += 0.05f;
+            }
+            else
+            {
+                if (GameValues.Score % 50 == 0) GameValues.TimeScale += .1f;
+            }
         }
-        lifeCount--;
-        return 0 == lifeCount;
     }
 }
